@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomDashboard from "./components/CustomDashboard";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import Trades from "./components/Trade";
 
 const App = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const App = () => {
           element={<CustomDashboard email={email} />}
         />
         <Route path="/analytics" element={<span />} />
+        <Route path="/Trades/:id" element={<Trades />} />
       </Routes>
     </BrowserRouter>
   );

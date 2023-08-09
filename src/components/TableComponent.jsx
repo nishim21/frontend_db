@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import axios from 'axios'
+import { useNavigate } from "react-router";
 
 export const tableHeaders = [
   "Security ID",
@@ -17,6 +18,7 @@ export const tableHeaders = [
   "Type",
   "Face Value",
   "Status",
+  null,
   null
 ];
 
@@ -122,6 +124,10 @@ const TableComponent = ({
       // Handle error here, display an error message, etc.
     }
   };  
+  const navigate1 = useNavigate()
+ const handlehover =(id)=>{
+  navigate1(`/Trades/${id}`)
+ }
   return (
     <Box>
       {data.length > 0 ? (
@@ -175,7 +181,13 @@ const TableComponent = ({
                   <IconButton onClick={() => handleChangeDelete(item.id)}>
             <DeleteOutlineIcon />
           </IconButton>
+         
                   </td>
+                  <td>
+                  <IconButton  onClick={()=>handlehover(item.id)}>
+           "View Details"
+          </IconButton>
+          </td>
                 </tr>
               ))}
             </tbody>
