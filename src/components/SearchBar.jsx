@@ -15,7 +15,7 @@ import { CSVLink } from "react-csv";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import axios from "axios";
-import { Tooltip } from '@mui/material';
+import { Tooltip } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -150,7 +150,7 @@ const SearchBar = ({ data, filter, email }) => {
   };
 
   const addToFavorite = async () => {
-    setFav(true);
+    setFav(!isFavSet);
     selectedItems.map(async (item) => {
       const id = item.id;
       try {
@@ -191,8 +191,8 @@ const SearchBar = ({ data, filter, email }) => {
       <Box
         sx={{ flexGrow: 1 }}
         height={"fit-content"}
-        backgroundColor={"darkgrey"}
-        style={{borderRadius: "12px"}}
+        backgroundColor={"lightgrey"}
+        style={{ borderRadius: "2px" }}
       >
         <Toolbar style={{ paddingLeft: "0.00001em", paddingRight: "1.3em" }}>
           <Search>
@@ -210,55 +210,50 @@ const SearchBar = ({ data, filter, email }) => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex", columnGap: "0.5em" } }}>
             {selectedItems.length > 0 ? (
+              <Tooltip title="Add to favorites">
+                <Button
+                  size="small"
+                  variant={isFavHovering ? "outlined" : "text"}
+                  onClick={addToFavorite}
+                  onMouseOver={handleFavMouseOver}
+                  onMouseOut={handleFavMouseOut}
+                >
+                  {isFavSet ? <GradeIcon /> : <StarBorderIcon />}
+                </Button>
+              </Tooltip>
+            ) : null}
+            <Tooltip title="Sort by maturity date">
               <Button
                 size="small"
-                variant={isFavHovering ? "outlined" : "text"}
-                onClick={addToFavorite}
-                onMouseOver={handleFavMouseOver}
-                onMouseOut={handleFavMouseOut}
+                variant={isSortHovering ? "outlined" : "text"}
+                onClick={sortByDate}
+                onMouseOver={handleSortMouseOver}
+                onMouseOut={handleSortMouseOut}
               >
-                {isFavSet ? <GradeIcon /> : <StarBorderIcon />}
-                {isFavHovering && (
-                  <Typography className="btntext" variant="body1">
-                    Add to favorites
-                  </Typography>
+                {isdataSorted === 0 ? (
+                  <SwapVertIcon />
+                ) : isdataSorted < 0 ? (
+                  <ArrowDownwardIcon />
+                ) : (
+                  <ArrowUpwardIcon />
                 )}
               </Button>
-            ) : null}
-          <Tooltip title="Sort by maturity date">
-
-            <Button
-              size="small"
-              variant={isSortHovering ? "outlined" : "text"}
-              onClick={sortByDate}
-              onMouseOver={handleSortMouseOver}
-              onMouseOut={handleSortMouseOut}
-            >
-                {isdataSorted === 0 ? (
-                <SwapVertIcon />
-              ) : isdataSorted < 0 ? (
-                <ArrowDownwardIcon />
-              ) : (
-                <ArrowUpwardIcon />
-              )}
-            </Button>
             </Tooltip>
             <CSVLink
               className="downloadbtn"
               filename="my-file.csv"
               data={csvData}
             >
-            <Tooltip title="Export to CSV">  
-              <Button
-                size="small"
-                variant={isExportHovering ? "outlined": "text"}
-                onMouseOver={handleExportMouseOver}
-                onMouseOut={handleExportMouseOut}
-              >   
-                    <UpgradeIcon />
-                    </Button>
-                  </Tooltip>
-
+              <Tooltip title="Export to CSV">
+                <Button
+                  size="small"
+                  variant={isExportHovering ? "outlined" : "text"}
+                  onMouseOver={handleExportMouseOver}
+                  onMouseOut={handleExportMouseOut}
+                >
+                  <UpgradeIcon />
+                </Button>
+              </Tooltip>
             </CSVLink>
           </Box>
         </Toolbar>

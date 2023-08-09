@@ -13,7 +13,10 @@ const Navbar = ({ onCustomDash }) => {
   return (
     <Box style={{ backgroundColor: "#76C2DC" }}>
       <nav
-        style={{ backgroundColor: "black", borderRadius: "0px 0px 12px 12px" }}
+        style={{
+          backgroundColor: "#34383c",
+          borderRadius: "0px 0px 12px 12px",
+        }}
         className="navbar navbar-expand-lg bg-body-tertiary top"
       >
         <div className="container-fluid">
@@ -82,7 +85,7 @@ const Navbar = ({ onCustomDash }) => {
                     backgroundColor: "white",
                     padding: "4px 10px",
                     borderRadius: "5px",
-                    color: "black",
+                    color: "#34383c",
                   }}
                   onClick={handleLogout}
                 >
