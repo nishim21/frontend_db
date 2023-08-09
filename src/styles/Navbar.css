@@ -1,13 +1,14 @@
 /* Navbar.css */
 .logout-button {
-    background-color: blue;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: darkblue;
-  }
-  
+  color: #2e5e80;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: "0.02em";
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #2e5e80;
+  color: whitesmoke;
+}

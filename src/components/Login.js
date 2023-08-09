@@ -3,9 +3,11 @@ import "../styles/Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ email, setEmail }) {
+export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [email, setEmail] = useState("");
+
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {

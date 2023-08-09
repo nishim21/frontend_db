@@ -4,13 +4,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { FlexRowSpaceBetween } from "./Containers";
 import { Typography, Button, Drawer, Box, TextField } from "@mui/material";
 
-function DatePickerApp() {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-}
 const Header = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [id, setID] = useState("");
@@ -22,7 +15,7 @@ const Header = () => {
   const [coupon, setCoupon] = useState("");
   const [facevalue, setFace] = useState("");
   const [items, setItems] = useState([]);
-  const [status, setStatus] = useState("Active");
+  const [status, setStatus] = useState("active");
   const [selectedDate, setSelectedDate] = useState(null);
 
   const openForm = () => {
@@ -56,11 +49,10 @@ const Header = () => {
     };
     setItems([...items, newItem]);
     console.log(newItem);
-    // Send data to backend
+
     fetch("http://localhost:9090/bonds/security/create", {
       method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newItem),
@@ -72,8 +64,6 @@ const Header = () => {
       .catch((error) => {
         console.error("Error sending data to backend:", error);
       });
-    //  .then(data => this.setState({ creditcards: data.creditcards }))
-    //  .catch(error => this.setState({ error }));
 
     closeForm();
   };
@@ -82,9 +72,10 @@ const Header = () => {
     <FlexRowSpaceBetween
       className="grad"
       style={{
-        padding: "1rem",
-        backgroundColor: "#C2E6F4",
+        padding: "2rem",
+        backgroundColor: "#6AAEC6",
         marginBottom: "10px",
+        borderRadius: "0px 0px 12px 12px",
       }}
     >
       <Typography
@@ -92,13 +83,19 @@ const Header = () => {
         noWrap
         component="div"
         sx={{ display: { xs: "none", sm: "block" } }}
-        style={{ color: "#2e5e80" }}
+        style={{ color: "#ffffff", fontWeight: "bold" }}
       >
         BondMate
       </Typography>
-      <Button size="small" variant="contained" onClick={openForm}>
+      <Button
+        size="small"
+        variant="contained"
+        style={{ backgroundColor: "white", color: "#6AAEC6" }}
+        onClick={openForm}
+      >
         <Typography
           variant="body1"
+          style={{ fontWeight: "bold" }}
           noWrap
           component="div"
           sx={{ display: { xs: "none", sm: "block" } }}
@@ -131,7 +128,7 @@ const Header = () => {
           style={{
             borderRadius: "12px 0px 0px 0px",
             background:
-              "linear-gradient(92.81deg, #003361 -6.17%, #007CEC 106.57%)",
+              "linear-gradient(92.81deg, #6AAEC6 -6.17%, #6AAEC6 106.57%)",
             color: "#FFF",
             padding: "20px 30px",
             justifyContent: "space-between",
@@ -239,7 +236,11 @@ const Header = () => {
               onChange={(e) => setFace(e.target.value)}
             />
           </Box>
-          <Button variant="contained" onClick={handleSubmit}>
+          <Button
+            style={{ backgroundColor: "#34383c" }}
+            variant="contained"
+            onClick={handleSubmit}
+          >
             Save
           </Button>
         </Box>

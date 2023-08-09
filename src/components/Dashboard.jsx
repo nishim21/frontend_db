@@ -6,10 +6,11 @@ import SearchBar from "./SearchBar";
 import TableComponent from "./TableComponent";
 import { Container, Row, Col } from "react-bootstrap";
 
-function Dashboard() {
+function Dashboard({ email, setOnCustomDash, onCustomDash }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    setOnCustomDash(false);
     fetch("http://localhost:9090/bonds/security")
       .then((response) => response.json())
       .then((responseData) => {
@@ -24,15 +25,15 @@ function Dashboard() {
   }, []);
   const [filter, setFilter] = useState("all"); // Initialize with default filter
   return (
-    <Container fluid className="contain">
-      <Navbar />
+    <Container fluid className="contain" style={{ padding: "0px" }}>
+      <Navbar onCustomDash={onCustomDash} />
       <Header />
       <Row>
         <Col xs={12} md={2}>
           <Sidebar setFilter={setFilter} />
         </Col>
         <Col xs={12} md={10}>
-          <SearchBar data={data} filter={filter} />
+          <SearchBar data={data} filter={filter} email={email} />
           {/* Your content for the right two-thirds of the dashboard */}
         </Col>
       </Row>
