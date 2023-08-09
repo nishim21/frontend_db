@@ -28,7 +28,7 @@ const TableComponent = ({
   setSelectedItems,
   filter,
   setCsvData,
-  updateTableData
+  updateTableData,
 }) => {
   let checkedItems = selectedItems;
    
@@ -52,7 +52,6 @@ const TableComponent = ({
           type,
           facevalue,
           status,
-          
         }) => [
           id,
           isin,
@@ -121,8 +120,10 @@ const TableComponent = ({
   };
   const handleChangeDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:9090/bonds/security/delete?id=${id}`);
-      const updatedData = data.filter(item => item.id !== id);
+      await axios.delete(
+        `http://localhost:9090/bonds/security/delete?id=${id}`
+      );
+      const updatedData = data.filter((item) => item.id !== id);
       // Call the function to update 'tableData' state in parent component
       updateTableData(updatedData);
     } catch (error) {
@@ -133,26 +134,32 @@ const TableComponent = ({
   const navigate1 = useNavigate()
  const handlehover =(id)=>{
   navigate1(`/Trades/${id}`)
-  const navigate = useNavigate()
+  
+ }
+ const navigate = useNavigate()
  const handleChange = (id) =>{
   console.log(id);
   
  navigate(`/securityDetail/${id}`)
- }
+ 
+}
   return (
     <Box>
       {data.length > 0 ? (
-        <Box className="container card card-body temp" style={{width: "100%", margin: "0px", maxWidth: "100%"}}>
+        <Box
+          className="container card card-body temp"
+          style={{ width: "100%", margin: "0px", maxWidth: "100%" }}
+        >
           <Table
             responsive
             hover={true}
             className="table table-striped table-light"
           >
-            <thead>
-              <tr className="table-primary">
-                <th>Select</th>
+            <thead color="#34383c">
+              <tr color="#34383c" className="table-primary">
+                <th color="#34383c">Select</th>
                 {tableHeaders.map((header) => (
-                  <th>{header}</th>
+                  <th color="#34383c">{header}</th>
                 ))}
               </tr>
             </thead>
@@ -243,5 +250,6 @@ const TableComponent = ({
     </Box>
   );
 };
-}
+
+
 export default TableComponent;
