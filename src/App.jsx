@@ -3,17 +3,38 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomDashboard from "./components/CustomDashboard";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import SecurityDetails from "./components/SecurityDetails"
+import SecurityDetails from "./components/SecurityDetails";
 const App = () => {
   const [email, setEmail] = useState("");
+  const [onCustomDash, setOnCustomDash] = useState(false);
   return (
     <BrowserRouter>
-    <Routes>
-   <Route path='/' element={<Login />} /> 
-  <Route path='/dashboard' element={<Dashboard/>} /> 
-  <Route path="/securityDetail/:id" element={<SecurityDetails /> } />
-  </Routes>
-  </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login email={email} setEmail={setEmail} />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              email={email}
+              onCustomDash={false}
+              setOnCustomDash={setOnCustomDash}
+            />
+          }
+        />
+        <Route path="/securityDetail/:id" element={<SecurityDetails />} />
+        <Route
+          path="/customDashboard"
+          element={
+            <CustomDashboard
+              email={email}
+              onCustomDash={true}
+              setOnCustomDash={setOnCustomDash}
+            />
+          }
+        />
+        <Route path="/analytics" element={<span />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

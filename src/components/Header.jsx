@@ -49,7 +49,7 @@ const Header = () => {
     };
     setItems([...items, newItem]);
     console.log(newItem);
-    
+
     fetch("http://localhost:9090/bonds/security/create", {
       method: "POST",
       headers: {
@@ -64,28 +64,38 @@ const Header = () => {
       .catch((error) => {
         console.error("Error sending data to backend:", error);
       });
-      
+
     closeForm();
   };
 
   return (
     <FlexRowSpaceBetween
       className="grad"
-      style={{ padding: "2rem", backgroundColor: "#76C2DC", marginBottom: "10px", borderRadius: "0px 0px 12px 12px" }}
+      style={{
+        padding: "2rem",
+        backgroundColor: "#6AAEC6",
+        marginBottom: "10px",
+        borderRadius: "0px 0px 12px 12px",
+      }}
     >
       <Typography
         variant="h4"
         noWrap
         component="div"
         sx={{ display: { xs: "none", sm: "block" } }}
-        style={{color: "#ffffff", fontWeight: "bold"}}
+        style={{ color: "#ffffff", fontWeight: "bold" }}
       >
         BondMate
       </Typography>
-      <Button size="small" variant="contained" style={{backgroundColor: "white", color: "#76C2DC"}} onClick={openForm}>
+      <Button
+        size="small"
+        variant="contained"
+        style={{ backgroundColor: "white", color: "#6AAEC6" }}
+        onClick={openForm}
+      >
         <Typography
           variant="body1"
-          style={{fontWeight: "bold"}}
+          style={{ fontWeight: "bold" }}
           noWrap
           component="div"
           sx={{ display: { xs: "none", sm: "block" } }}
@@ -118,7 +128,7 @@ const Header = () => {
           style={{
             borderRadius: "12px 0px 0px 0px",
             background:
-              "linear-gradient(92.81deg, #003361 -6.17%, #007CEC 106.57%)",
+              "linear-gradient(92.81deg, #6AAEC6 -6.17%, #6AAEC6 106.57%)",
             color: "#FFF",
             padding: "20px 30px",
             justifyContent: "space-between",
@@ -226,7 +236,11 @@ const Header = () => {
               onChange={(e) => setFace(e.target.value)}
             />
           </Box>
-          <Button variant="contained" onClick={handleSubmit}>
+          <Button
+            style={{ backgroundColor: "#34383c" }}
+            variant="contained"
+            onClick={handleSubmit}
+          >
             Save
           </Button>
         </Box>
