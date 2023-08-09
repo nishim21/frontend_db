@@ -3,7 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomDashboard from "./components/CustomDashboard";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import Trades from "./components/Trade";
 import SecurityDetails from "./components/SecurityDetails";
+
 const App = () => {
   const [email, setEmail] = useState("");
   const [onCustomDash, setOnCustomDash] = useState(false);
@@ -33,6 +35,7 @@ const App = () => {
           }
         />
         <Route path="/analytics" element={<span />} />
+        <Route path="/Trades/:id" element={<Trades />} />
       </Routes>
     </BrowserRouter>
   );

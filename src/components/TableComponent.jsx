@@ -3,11 +3,11 @@ import { Form, Table, Pagination } from "react-bootstrap";
 import { Chip, IconButton } from "@mui/material";
 import { FlexColumnAlignCenter } from "./Containers";
 import { Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import axios from "axios";
-
-import { useNavigate, useNavigation } from "react-router-dom";
+import Box from '@mui/material/Box';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import axios from 'axios'
+import { useNavigate } from "react-router";
 export const tableHeaders = [
   "Security ID",
   "ISIN",
@@ -19,6 +19,7 @@ export const tableHeaders = [
   "Face Value",
   "Status",
   null,
+  null
 ];
 
 const TableComponent = ({
@@ -30,7 +31,7 @@ const TableComponent = ({
   updateTableData,
 }) => {
   let checkedItems = selectedItems;
-
+   
   const handleCheckboxChange = (index, e) => {
     if (e.target.checked) {
       checkedItems.push(data[index]);
@@ -65,36 +66,42 @@ const TableComponent = ({
       ),
     ]);
   };
-
+ const [filteredData,setFilteredData]= useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  let filteredData = data;
+  
   const currentDate = new Date(); // Current date
+ 
+  useEffect(() => {
+    // Update filtered data whenever data or filter changes
+    let filteredData = data;
+    console.log(filteredData)
+    if (filter === "matured") {
+      filteredData = data.filter(
+        (item) => new Date(item.maturitydate) <= currentDate && item.status === "inactive"
+      );
+    } else if (filter === "pending") {
+      filteredData = data.filter(
+        (item) => new Date(item.maturitydate) > currentDate
+      );
+    } else if (filter === "flagged") {
+      filteredData = data.filter(
+        (item) =>
+          new Date(item.maturitydate) <= currentDate && item.status === "active"
+      );
+    } else if (filter === "upcoming") {
+      const tenDaysLater = new Date();
+      tenDaysLater.setDate(tenDaysLater.getDate() + 10);
+      filteredData = data.filter(
+        (item) =>
+          new Date(item.maturitydate) > currentDate &&
+          new Date(item.maturitydate) <= tenDaysLater
+      );
+    }
 
-  if (filter === "matured") {
-    filteredData = data.filter(
-      (item) => new Date(item.maturitydate) <= currentDate
-    );
-  } else if (filter === "pending") {
-    filteredData = data.filter(
-      (item) => new Date(item.maturitydate) > currentDate
-    );
-  } else if (filter === "flagged") {
-    filteredData = filteredData.filter(
-      (item) =>
-        new Date(item.maturitydate) < currentDate && item.status === "Active"
-    );
-  } else if (filter === "upcoming") {
-    const tenDaysLater = new Date();
-    tenDaysLater.setDate(tenDaysLater.getDate() + 10);
-
-    filteredData = filteredData.filter(
-      (item) =>
-        new Date(item.maturitydate) > currentDate &&
-        new Date(item.maturitydate) <= tenDaysLater
-    );
-  }
-
+    setCurrentPage(1); // Reset current page when filtering changes
+    setFilteredData(filteredData); // Set the filtered data
+  }, [data, filter]);
   // Calculate the index of the last item of the current page
   const lastIndex = currentPage * itemsPerPage;
 
@@ -123,13 +130,19 @@ const TableComponent = ({
       console.error("An error occurred while deleting:", error);
       // Handle error here, display an error message, etc.
     }
-  };
-  const navigate = useNavigate();
-  const handleChange = (id) => {
-    console.log(id);
-
-    navigate(`/securityDetail/${id}`);
-  };
+  };  
+  const navigate1 = useNavigate()
+ const handlehover =(id)=>{
+  navigate1(`/Trades/${id}`)
+  
+ }
+ const navigate = useNavigate()
+ const handleChange = (id) =>{
+  console.log(id);
+  
+ navigate(`/securityDetail/${id}`)
+ 
+}
   return (
     <Box>
       {data.length > 0 ? (
@@ -153,6 +166,7 @@ const TableComponent = ({
             <tbody>
               {currentItems.map((item, index) => (
                 <tr
+                
                   key={item.id}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white",
@@ -168,7 +182,9 @@ const TableComponent = ({
                     />
                   </td>
                   <td>{item.id}</td>
-                  <td onClick={() => handleChange(item.id)}>{item.isin}</td>
+                  <td onClick={()=>handleChange(item.id)}>
+  {item.isin}
+</td>
                   <td>{item.cusip}</td>
                   <td>{item.issuer}</td>
                   <td>{item.maturitydate}</td>
@@ -183,10 +199,19 @@ const TableComponent = ({
                     />
                   </td>
                   <td>
-                    <IconButton onClick={() => handleChangeDelete(item.id)}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
+                  <IconButton
+  onClick={() => handleChangeDelete(item.id)}
+  sx={{ color: 'red' }}
+>
+  <DeleteOutlineIcon  sx={{ fill: 'red' }} />
+</IconButton>
+         
                   </td>
+                  <td>
+                  <IconButton  onClick={()=>handlehover(item.id)}>
+                  <VisibilityIcon />
+          </IconButton>
+          </td>
                 </tr>
               ))}
             </tbody>
@@ -225,5 +250,6 @@ const TableComponent = ({
     </Box>
   );
 };
+
 
 export default TableComponent;
