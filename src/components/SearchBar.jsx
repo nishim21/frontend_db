@@ -2,11 +2,9 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Button } from "@mui/material";
-import TableComponent, { tableHeaders } from "./TableComponent";
+import TableComponent from "./TableComponent";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -15,7 +13,7 @@ import { CSVLink } from "react-csv";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import axios from "axios";
-import { Tooltip } from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,33 +67,6 @@ const SearchBar = ({ data, filter, email }) => {
   const [selectedItems, setSelectedItems] = React.useState([]);
   const [csvData, setCsvData] = React.useState([]);
   const [isFavSet, setFav] = React.useState(false);
-  const [isFavHovering, setIsFavHovering] = React.useState(false);
-  const [isSortHovering, setIsSortHovering] = React.useState(false);
-  const [isExportHovering, setIsExportHovering] = React.useState(false);
-
-  const handleFavMouseOver = () => {
-    setIsFavHovering(true);
-  };
-
-  const handleFavMouseOut = () => {
-    setIsFavHovering(false);
-  };
-
-  const handleSortMouseOver = () => {
-    setIsSortHovering(true);
-  };
-
-  const handleSortMouseOut = () => {
-    setIsSortHovering(false);
-  };
-
-  const handleExportMouseOver = () => {
-    setIsExportHovering(true);
-  };
-
-  const handleExportMouseOut = () => {
-    setIsExportHovering(false);
-  };
 
   React.useEffect(() => {
     if (search.length > 0) {
@@ -211,25 +182,17 @@ const SearchBar = ({ data, filter, email }) => {
           <Box sx={{ display: { xs: "none", md: "flex", columnGap: "0.5em" } }}>
             {selectedItems.length > 0 ? (
               <Tooltip title="Add to favorites">
-                <Button
+                <IconButton
+                  color="#34383c"
                   size="small"
-                  variant={isFavHovering ? "outlined" : "text"}
                   onClick={addToFavorite}
-                  onMouseOver={handleFavMouseOver}
-                  onMouseOut={handleFavMouseOut}
                 >
                   {isFavSet ? <GradeIcon /> : <StarBorderIcon />}
-                </Button>
+                </IconButton>
               </Tooltip>
             ) : null}
             <Tooltip title="Sort by maturity date">
-              <Button
-                size="small"
-                variant={isSortHovering ? "outlined" : "text"}
-                onClick={sortByDate}
-                onMouseOver={handleSortMouseOver}
-                onMouseOut={handleSortMouseOut}
-              >
+              <IconButton size="small" onClick={sortByDate} color="#34383c">
                 {isdataSorted === 0 ? (
                   <SwapVertIcon />
                 ) : isdataSorted < 0 ? (
@@ -237,7 +200,7 @@ const SearchBar = ({ data, filter, email }) => {
                 ) : (
                   <ArrowUpwardIcon />
                 )}
-              </Button>
+              </IconButton>
             </Tooltip>
             <CSVLink
               className="downloadbtn"
@@ -245,14 +208,9 @@ const SearchBar = ({ data, filter, email }) => {
               data={csvData}
             >
               <Tooltip title="Export to CSV">
-                <Button
-                  size="small"
-                  variant={isExportHovering ? "outlined" : "text"}
-                  onMouseOver={handleExportMouseOver}
-                  onMouseOut={handleExportMouseOut}
-                >
+                <IconButton size="small" color="#34383c">
                   <UpgradeIcon />
-                </Button>
+                </IconButton>
               </Tooltip>
             </CSVLink>
           </Box>
