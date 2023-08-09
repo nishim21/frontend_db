@@ -29,6 +29,7 @@ const Search = styled("div")(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: "auto",
   },
+  color: "#34383c",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -54,9 +55,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
     border: "2px solid #c5cfe3",
     "&:hover": {
-      border: "2px solid #5c79af",
+      border: "2px solid #6AAEC6",
     },
     borderRadius: "5px",
+    color: "#34383c",
   },
 }));
 

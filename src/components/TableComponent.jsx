@@ -3,9 +3,9 @@ import { Form, Table, Pagination } from "react-bootstrap";
 import { Chip, IconButton } from "@mui/material";
 import { FlexColumnAlignCenter } from "./Containers";
 import { Typography } from "@mui/material";
-import Box from '@mui/material/Box';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import axios from 'axios'
+import Box from "@mui/material/Box";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import axios from "axios";
 
 import { useNavigate, useNavigation } from "react-router-dom";
 export const tableHeaders = [
@@ -18,7 +18,7 @@ export const tableHeaders = [
   "Type",
   "Face Value",
   "Status",
-  null
+  null,
 ];
 
 const TableComponent = ({
@@ -27,10 +27,10 @@ const TableComponent = ({
   setSelectedItems,
   filter,
   setCsvData,
-  updateTableData
+  updateTableData,
 }) => {
   let checkedItems = selectedItems;
-   
+
   const handleCheckboxChange = (index, e) => {
     if (e.target.checked) {
       checkedItems.push(data[index]);
@@ -51,7 +51,6 @@ const TableComponent = ({
           type,
           facevalue,
           status,
-          
         }) => [
           id,
           isin,
@@ -66,7 +65,7 @@ const TableComponent = ({
       ),
     ]);
   };
- 
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   let filteredData = data;
@@ -114,42 +113,46 @@ const TableComponent = ({
   };
   const handleChangeDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:9090/bonds/security/delete?id=${id}`);
-      const updatedData = data.filter(item => item.id !== id);
+      await axios.delete(
+        `http://localhost:9090/bonds/security/delete?id=${id}`
+      );
+      const updatedData = data.filter((item) => item.id !== id);
       // Call the function to update 'tableData' state in parent component
       updateTableData(updatedData);
     } catch (error) {
       console.error("An error occurred while deleting:", error);
       // Handle error here, display an error message, etc.
     }
-  };  
-  const navigate = useNavigate()
- const handleChange = (id) =>{
-  console.log(id);
-  
- navigate(`/securityDetail/${id}`)
- }
+  };
+  const navigate = useNavigate();
+  const handleChange = (id) => {
+    console.log(id);
+
+    navigate(`/securityDetail/${id}`);
+  };
   return (
     <Box>
       {data.length > 0 ? (
-        <Box className="container card card-body temp" style={{width: "100%", margin: "0px", maxWidth: "100%"}}>
+        <Box
+          className="container card card-body temp"
+          style={{ width: "100%", margin: "0px", maxWidth: "100%" }}
+        >
           <Table
             responsive
             hover={true}
             className="table table-striped table-light"
           >
-            <thead>
-              <tr className="table-primary">
-                <th>Select</th>
+            <thead color="#34383c">
+              <tr color="#34383c" className="table-primary">
+                <th color="#34383c">Select</th>
                 {tableHeaders.map((header) => (
-                  <th>{header}</th>
+                  <th color="#34383c">{header}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {currentItems.map((item, index) => (
                 <tr
-                
                   key={item.id}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white",
@@ -165,9 +168,7 @@ const TableComponent = ({
                     />
                   </td>
                   <td>{item.id}</td>
-                  <td onClick={()=>handleChange(item.id)}>
-  {item.isin}
-</td>
+                  <td onClick={() => handleChange(item.id)}>{item.isin}</td>
                   <td>{item.cusip}</td>
                   <td>{item.issuer}</td>
                   <td>{item.maturitydate}</td>
@@ -182,9 +183,9 @@ const TableComponent = ({
                     />
                   </td>
                   <td>
-                  <IconButton onClick={() => handleChangeDelete(item.id)}>
-            <DeleteOutlineIcon />
-          </IconButton>
+                    <IconButton onClick={() => handleChangeDelete(item.id)}>
+                      <DeleteOutlineIcon />
+                    </IconButton>
                   </td>
                 </tr>
               ))}
