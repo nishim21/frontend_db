@@ -62,7 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = ({ data, filter }) => {
+const SearchBar = ({ data, filter, email }) => {
   const [search, setSearch] = React.useState("");
   const [tableData, setData] = React.useState({ nodes: data });
   const [isdataSorted, setDataSorted] = React.useState(0);
@@ -114,10 +114,10 @@ const SearchBar = ({ data, filter }) => {
     setSearch(event.target.value);
   };
 
-    // Function to update 'tableData' state after delete operation
-    const updateTableData = (updatedData) => {
-      setData({ nodes: updatedData });
-    };
+  // Function to update 'tableData' state after delete operation
+  const updateTableData = (updatedData) => {
+    setData({ nodes: updatedData });
+  };
 
   const compare = (a, b) => {
     a = a.maturitydate.split("-").join("");
