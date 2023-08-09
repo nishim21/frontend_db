@@ -8,7 +8,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios'
 import { useNavigate } from "react-router";
-
 export const tableHeaders = [
   "Security ID",
   "ISIN",
@@ -32,7 +31,7 @@ const TableComponent = ({
   updateTableData
 }) => {
   let checkedItems = selectedItems;
-
+   
   const handleCheckboxChange = (index, e) => {
     if (e.target.checked) {
       checkedItems.push(data[index]);
@@ -134,6 +133,11 @@ const TableComponent = ({
   const navigate1 = useNavigate()
  const handlehover =(id)=>{
   navigate1(`/Trades/${id}`)
+  const navigate = useNavigate()
+ const handleChange = (id) =>{
+  console.log(id);
+  
+ navigate(`/securityDetail/${id}`)
  }
   return (
     <Box>
@@ -155,6 +159,7 @@ const TableComponent = ({
             <tbody>
               {currentItems.map((item, index) => (
                 <tr
+                
                   key={item.id}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white",
@@ -170,7 +175,9 @@ const TableComponent = ({
                     />
                   </td>
                   <td>{item.id}</td>
-                  <td>{item.isin}</td>
+                  <td onClick={()=>handleChange(item.id)}>
+  {item.isin}
+</td>
                   <td>{item.cusip}</td>
                   <td>{item.issuer}</td>
                   <td>{item.maturitydate}</td>
@@ -236,5 +243,5 @@ const TableComponent = ({
     </Box>
   );
 };
-
+}
 export default TableComponent;
