@@ -5,6 +5,7 @@ import { FlexColumnAlignCenter } from "./Containers";
 import { Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios'
 import { useNavigate } from "react-router";
 
@@ -67,36 +68,42 @@ const TableComponent = ({
       ),
     ]);
   };
- 
+ const [filteredData,setFilteredData]= useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  let filteredData = data;
+  
   const currentDate = new Date(); // Current date
+ 
+  useEffect(() => {
+    // Update filtered data whenever data or filter changes
+    let filteredData = data;
+    console.log(filteredData)
+    if (filter === "matured") {
+      filteredData = data.filter(
+        (item) => new Date(item.maturitydate) <= currentDate && item.status === "inactive"
+      );
+    } else if (filter === "pending") {
+      filteredData = data.filter(
+        (item) => new Date(item.maturitydate) > currentDate
+      );
+    } else if (filter === "flagged") {
+      filteredData = data.filter(
+        (item) =>
+          new Date(item.maturitydate) <= currentDate && item.status === "active"
+      );
+    } else if (filter === "upcoming") {
+      const tenDaysLater = new Date();
+      tenDaysLater.setDate(tenDaysLater.getDate() + 10);
+      filteredData = data.filter(
+        (item) =>
+          new Date(item.maturitydate) > currentDate &&
+          new Date(item.maturitydate) <= tenDaysLater
+      );
+    }
 
-  if (filter === "matured") {
-    filteredData = data.filter(
-      (item) => new Date(item.maturitydate) <= currentDate
-    );
-  } else if (filter === "pending") {
-    filteredData = data.filter(
-      (item) => new Date(item.maturitydate) > currentDate
-    );
-  } else if (filter === "flagged") {
-    filteredData = filteredData.filter(
-      (item) =>
-        new Date(item.maturitydate) < currentDate && item.status === "Active"
-    );
-  } else if (filter === "upcoming") {
-    const tenDaysLater = new Date();
-    tenDaysLater.setDate(tenDaysLater.getDate() + 10);
-
-    filteredData = filteredData.filter(
-      (item) =>
-        new Date(item.maturitydate) > currentDate &&
-        new Date(item.maturitydate) <= tenDaysLater
-    );
-  }
-
+    setCurrentPage(1); // Reset current page when filtering changes
+    setFilteredData(filteredData); // Set the filtered data
+  }, [data, filter]);
   // Calculate the index of the last item of the current page
   const lastIndex = currentPage * itemsPerPage;
 
@@ -178,14 +185,17 @@ const TableComponent = ({
                     />
                   </td>
                   <td>
-                  <IconButton onClick={() => handleChangeDelete(item.id)}>
-            <DeleteOutlineIcon />
-          </IconButton>
+                  <IconButton
+  onClick={() => handleChangeDelete(item.id)}
+  sx={{ color: 'red' }}
+>
+  <DeleteOutlineIcon  sx={{ fill: 'red' }} />
+</IconButton>
          
                   </td>
                   <td>
                   <IconButton  onClick={()=>handlehover(item.id)}>
-           "View Details"
+                  <VisibilityIcon />
           </IconButton>
           </td>
                 </tr>
