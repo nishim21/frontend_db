@@ -15,6 +15,7 @@ import { CSVLink } from "react-csv";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import axios from "axios";
+import { Tooltip } from '@mui/material';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -190,7 +191,8 @@ const SearchBar = ({ data, filter }) => {
       <Box
         sx={{ flexGrow: 1 }}
         height={"fit-content"}
-        backgroundColor={"lightgray"}
+        backgroundColor={"darkgrey"}
+        style={{borderRadius: "12px"}}
       >
         <Toolbar style={{ paddingLeft: "0.00001em", paddingRight: "1.3em" }}>
           <Search>
@@ -223,6 +225,8 @@ const SearchBar = ({ data, filter }) => {
                 )}
               </Button>
             ) : null}
+          <Tooltip title="Sort by maturity date">
+
             <Button
               size="small"
               variant={isSortHovering ? "outlined" : "text"}
@@ -230,33 +234,31 @@ const SearchBar = ({ data, filter }) => {
               onMouseOver={handleSortMouseOver}
               onMouseOut={handleSortMouseOut}
             >
-              {isdataSorted === 0 ? (
+                {isdataSorted === 0 ? (
                 <SwapVertIcon />
               ) : isdataSorted < 0 ? (
                 <ArrowDownwardIcon />
               ) : (
                 <ArrowUpwardIcon />
               )}
-              {isSortHovering && (
-                <Typography variant="body1">Sort by maturity date</Typography>
-              )}
             </Button>
+            </Tooltip>
             <CSVLink
               className="downloadbtn"
               filename="my-file.csv"
               data={csvData}
             >
+            <Tooltip title="Export to CSV">  
               <Button
                 size="small"
-                variant={isExportHovering ? "outlined" : "text"}
+                variant={isExportHovering ? "outlined": "text"}
                 onMouseOver={handleExportMouseOver}
                 onMouseOut={handleExportMouseOut}
-              >
-                <UpgradeIcon />
-                {isExportHovering && (
-                  <Typography variant="body1">Export to CSV</Typography>
-                )}
-              </Button>
+              >   
+                    <UpgradeIcon />
+                    </Button>
+                  </Tooltip>
+
             </CSVLink>
           </Box>
         </Toolbar>

@@ -71,24 +71,21 @@ const Header = () => {
   return (
     <FlexRowSpaceBetween
       className="grad"
-      style={{
-        padding: "1rem",
-        backgroundColor: "#C2E6F4",
-        marginBottom: "10px",
-      }}
+      style={{ padding: "2rem", backgroundColor: "#76C2DC", marginBottom: "10px", borderRadius: "0px 0px 12px 12px" }}
     >
       <Typography
         variant="h4"
         noWrap
         component="div"
         sx={{ display: { xs: "none", sm: "block" } }}
-        style={{ color: "#2e5e80" }}
+        style={{color: "#ffffff", fontWeight: "bold"}}
       >
         BondMate
       </Typography>
-      <Button size="small" variant="contained" onClick={openForm}>
+      <Button size="small" variant="contained" style={{backgroundColor: "white", color: "#76C2DC"}} onClick={openForm}>
         <Typography
           variant="body1"
+          style={{fontWeight: "bold"}}
           noWrap
           component="div"
           sx={{ display: { xs: "none", sm: "block" } }}

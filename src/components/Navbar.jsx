@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {Typography} from "@mui/material";
 import "../styles/Navbar.css";
 
+import { Box } from "@mui/material";
 const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -9,13 +11,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary top">
+    <Box style={{backgroundColor: "#76C2DC"}}>
+    <nav  style={{backgroundColor: "black", borderRadius: "0px 0px 12px 12px"}} className="navbar navbar-expand-lg bg-body-tertiary top">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           <img
             alt="app logo"
-            length="50em"
-            width="50em"
+            style={{color: "white"}}
+            length="35em"
+            width="35em"
             src={require("./images/2-removebg-preview.png")}
           />
         </a>
@@ -34,7 +38,7 @@ const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
-                className="nav-link active link-dark"
+                style={{color: "white", fontWeight: "500"}} className="nav-link active"
                 aria-current="page"
                 href="/customDashboard"
 
@@ -43,7 +47,7 @@ const Navbar = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" href="/analytics">
+              <a style={{color: "white", fontWeight: "500"}} className="nav-link active" href="/analytics">
                 Analytics
               </a>
             </li>
@@ -52,14 +56,23 @@ const Navbar = () => {
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             {/* Use ml-auto to push the items to the right */}
             <li className="nav-item">
-              <button className="nav-link logout-button" onClick={handleLogout}>
-                Logout
+              <button className="nav-link logout-button" style={{backgroundColor: "white", padding: "4px 10px", borderRadius: "5px", color: "black"}} onClick={handleLogout} >
+              <Typography
+                variant="body1"
+                style={{fontWeight: "bold"}}
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                LOG OUT
+              </Typography>
               </button>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    </Box>
   );
 };
 
